@@ -11,7 +11,7 @@ config_loader = ConfigLoader()
 config = config_loader.load("config.json")
 analyzer = CustomerAnalyzer(config)
 saver = CustomerSaver()
-validator = CustomerValidator()
+validator = CustomerValidator(config)
 
 try:
     customers = loader.load("customers.json")
@@ -24,7 +24,7 @@ result_list = []
 for customer in customers:
     validation=validator.validate(customer)
     if not validation["valid"]:
-        logger.warning(f"客户校验失败：{', '.join(validation["reason"])}")
+        logger.warning(f"客户校验失败：{', '.join(validation["errors"])}")
         continue
     customer_info = analyzer.analyze(customer)
 
