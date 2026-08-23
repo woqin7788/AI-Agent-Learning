@@ -3,14 +3,18 @@ from analyzer import CustomerAnalyzer
 from saver import CustomerSaver
 from config_loader import ConfigLoader
 from logger import logger
-from exceptions import CustomerDataError
+from exceptions import CustomerDataError, ConfigError
 from validator import CustomerValidator
 from cleaner import CustomerCleaner
 from deduplicator import CustomerDeduplicator
 
 loader = CustomerLoader()
 config_loader = ConfigLoader()
-config = config_loader.load("config.json")
+try:
+    config = config_loader.load("config.json")
+except ConfigError as e:
+    logger.error(e)
+    exit() 
 analyzer = CustomerAnalyzer(config)
 saver = CustomerSaver()
 validator = CustomerValidator(config)
@@ -24,8 +28,8 @@ except CustomerDataError as e:
     customers = []
 
 result_list = []
-customers = deduplicator.remove_duplicate(customers)
 customers = cleaner.clean_list(customers)
+customers = deduplicator.remove_duplicate(customers)
 for customer in customers:
     validation=validator.validate(customer)
     if not validation["valid"]:

@@ -1,5 +1,7 @@
 import json
 from logger import logger
+from exceptions import ConfigError
+
 
 class ConfigLoader:
     #加载config配置
@@ -9,3 +11,7 @@ class ConfigLoader:
                 return json.load(file)
         except FileNotFoundError:
             logger.info("加载config配置出错，文件不存在")
+            raise ConfigError()
+        except :
+            logger.info("加载config配置出错")
+            raise ConfigError()

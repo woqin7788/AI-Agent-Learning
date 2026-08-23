@@ -2,14 +2,17 @@ from customer import Customer
 
 #数据清洗
 class CustomerCleaner:
-    def clean(self,custmoer:Customer) ->Customer:
-        custmoer.country=custmoer.country.strip()
-        custmoer.company=custmoer.company.strip()
-        custmoer.email=custmoer.email.strip().lower()
-        return custmoer
-    def clean_list(self,custmoers:list[Customer]) ->list[Customer]:
+    def clean(self,customer:Customer) ->Customer:
+        if customer.country:
+            customer.country=customer.country.strip()
+        if customer.company:
+            customer.company=customer.company.strip()
+        if customer.email:
+            customer.email=customer.email.strip().lower()
+        return customer
+    def clean_list(self,customers:list[Customer]) ->list[Customer]:
         result=[]
-        for custmoer in custmoers:
-            result.append(self.clean(custmoer)
+        for customer in customers:
+            result.append(self.clean(customer)
             )
         return result
