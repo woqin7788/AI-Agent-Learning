@@ -71,15 +71,16 @@ class CustomerValidator:
         rules = self.config["validation_rules"]
 
         for customer in customers:
+            customer_info = customer.get_info()
             for rule in rules:
                 validator = validators_map.get(rule)
                 if validator is None:
                     logger.warning(f"未知的校验规则: {rule}")
                     continue
-                customer_info = customer.get_info()
+
                 error = validator(customer)
                 if error:
-                    customer_info["error"] = customer_info["error"] + error
+                    customer_info["errors"] = customer_info.get("errors",'')+ error
                     validate_customer.append(customer_info)
 
 
