@@ -30,38 +30,21 @@ class CustomerPipeline:
         customers = self.deduplicator.remove_duplicate(
             customers
         )
-
-        validator_customers = self.validator.list_validate(
+        validated_customers = self.validator.list_validate(
             customers
         )
-
         results = []
         err_count = 0
-        for validator_customer in validator_customers:
-
-            # validation = self.validator.validate(
-            #     customer
-            # )
-
-            if validator_customer["errors"]:
+        for validator_customer in validated_customers:
+            if not validator_customer["validation"]["valid"]:
                 err_count += 1
-                logger.info(f"检测出不合格客户：{validator_customer['errors']}")
+                logger.info(f"检测出不合格客户：{validator_customer['validation']['errors']},剔除后还剩{len(validated_customers) - err_count}个客户")
                 continue
-
-            customer = Customer(
-                validator_customer.get("company"),
-                validator_customer.get("country"),
-                validator_customer.get("email")
-            )
             result = self.analyzer.analyze(
-                customer
+                validator_customer["customer"]
             )
 
             results.append(result)
-
-        logger.info(f"validation剔除后还剩{len(customers) - err_count}个客户")
-
-
         self.saver.save(
             results,
             "result.json"

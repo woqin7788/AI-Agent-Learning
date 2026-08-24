@@ -60,28 +60,12 @@ class CustomerValidator:
             "errors": errors
         }
 
-    def list_validate(self, customers: list[Customer]) -> list[dict]:
-        validate_customer=[]
-        validators_map = {
-            "company": self.validate_company,
-            "country": self.validate_country,
-            "email": self.validate_email
-        }
-        
-        rules = self.config["validation_rules"]
-
+    def list_validate(self, customers: list[Customer]) -> list:
+        result = []
         for customer in customers:
-            customer_info = customer.get_info()
-            for rule in rules:
-                validator = validators_map.get(rule)
-                if validator is None:
-                    logger.warning(f"未知的校验规则: {rule}")
-                    continue
-
-                error = validator(customer)
-                if error:
-                    customer_info["errors"] = customer_info.get("errors",'')+ error
-                    validate_customer.append(customer_info)
-
-
-        return validate_customer
+            validation_result = self.validate(customer)
+            result.append({
+                "customer": customer,
+                "validation": validation_result
+            })
+        return result

@@ -51,18 +51,13 @@ class CustomerAnalyzer:
         result["level"] = level
 
         return result
-    def list_analyze(self, customers:list[dict])->list[dict]:
-        result=[]
+    def list_analyze(self, customers:list[Customer])->list[dict]:
+        results=[]
         for customer in customers:
-
             score = self.score_customer(customer)
-
             level = self.get_level(score)
-
             result = customer.get_info()
-
             result["score"] = score
-
             result["level"] = level
-
-        return result
+            results.append(result)
+        return results
