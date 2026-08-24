@@ -11,5 +11,7 @@
     "validation_rules": [
         "email",
         "country"
-    ]
+    ],
+     "analyzer": "GPTAnalyzer"
+
 }

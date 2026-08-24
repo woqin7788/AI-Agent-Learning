@@ -1,7 +1,8 @@
-from customer import Customer
-from interfaces.analyzer_interface import AnalyzerInterface
+from week02.day02.customer import Customer
+from week02.day02.registry import register
+from week02.day02.interfaces.analyzer_interface import AnalyzerInterface
 
-class CustomerAnalyzer:
+class CustomerAnalyzer(AnalyzerInterface):
 
     def __init__(self,config):
         self.config=config
@@ -62,3 +63,9 @@ class CustomerAnalyzer:
             result["level"] = level
             results.append(result)
         return results
+
+
+register(
+    "CustomerAnalyzer",
+    CustomerAnalyzer
+)

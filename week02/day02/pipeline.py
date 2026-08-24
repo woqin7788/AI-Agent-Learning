@@ -1,5 +1,4 @@
 from logger import logger
-from customer import Customer
 class CustomerPipeline:
     def __init__(
             self,
