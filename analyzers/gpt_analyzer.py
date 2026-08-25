@@ -1,5 +1,5 @@
-from week02.day02.interfaces.analyzer_interface import AnalyzerInterface
-from week02.day02.registry import register
+from interfaces.analyzer_interface import AnalyzerInterface
+from registry import register
 
 
 class GPTAnalyzer(AnalyzerInterface):

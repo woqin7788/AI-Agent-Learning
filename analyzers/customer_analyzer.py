@@ -1,6 +1,6 @@
-from week02.day02.customer import Customer
-from week02.day02.registry import register
-from week02.day02.interfaces.analyzer_interface import AnalyzerInterface
+from customer import Customer
+from registry import register
+from interfaces.analyzer_interface import AnalyzerInterface
 
 class CustomerAnalyzer(AnalyzerInterface):
 

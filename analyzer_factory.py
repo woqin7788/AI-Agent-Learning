@@ -1,4 +1,4 @@
-from week02.day02.registry import get
+from registry import get
 
 
 class AnalyzerFactory:

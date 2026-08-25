@@ -1,12 +1,12 @@
 from customer import Customer
 import re
 from logger import logger
-from config_loader import ConfigLoader
 
 
 class CustomerValidator:
     def __init__(self, config: dict):
         self.config = config
+    #校验客户公司信息，给出错误信息
     def validate_company(self, customer: Customer) -> str | None:
 
         if not customer.company:
@@ -14,7 +14,7 @@ class CustomerValidator:
 
         return None
 
-
+    # 校验客户国家信息，给出错误信息
     def validate_country(self, customer: Customer) -> str | None:
 
         if not customer.country:
@@ -22,6 +22,7 @@ class CustomerValidator:
 
         return None
 
+    # 校验客户邮箱信息，给出错误信息
     def validate_email(self, customer: Customer) -> str | None:
 
         if not customer.email:
@@ -57,3 +58,13 @@ class CustomerValidator:
             "valid": len(errors) == 0,
             "errors": errors
         }
+
+    def list_validate(self, customers: list[Customer]) -> list:
+        result = []
+        for customer in customers:
+            validation_result = self.validate(customer)
+            result.append({
+                "customer": customer,
+                "validation": validation_result
+            })
+        return result

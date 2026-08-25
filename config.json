@@ -12,6 +12,6 @@
         "email",
         "country"
     ],
-     "analyzer": "GPTAnalyzer"
+     "analyzer": "CustomerAnalyzer"
 
 }

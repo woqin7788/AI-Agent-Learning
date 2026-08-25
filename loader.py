@@ -24,9 +24,9 @@ class CustomerLoader:
                     customer=Customer(
                         item.get("company"),
                         item.get("country"),
-                        item.get("email") or "暂无"
+                        item.get("email") or "暂无",
                     )
-
+                    customer.tags.append("重点关注")
                     customers.append(customer)
 
         except FileNotFoundError as e:
